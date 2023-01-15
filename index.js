@@ -55,6 +55,17 @@ async function run() {
             const query = { _id: ObjectId(id) };
             const result = await taskCollection.findOne(query);
             res.send(result);
+        });
+
+
+        app.put('/tasks/completed/:task', async (req, res) => {
+            const task = req.params.task;
+            const filter = { task: task };
+            const updateDoc = {
+                $set: { role: 'complete' },
+            };
+            const result = await taskCollection.updateOne(filter, updateDoc);
+            res.send(result);
         })
     }
 
